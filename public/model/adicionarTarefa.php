@@ -1,6 +1,10 @@
 <?php
 
-	echo $tituloDaTarefa . "<br>";
-	echo $descricaoDaTarefa . "<br>";
-	echo $action . "<br>";
+	require 'Task.php';
 
+	session_start();
+
+	$taskObj = new Task();
+	$taskObj->create($tituloDaTarefa, $descricaoDaTarefa);
+
+	header('Location: ../index.php');

@@ -1,11 +1,6 @@
 <?php
 	session_start();
 
-	if( isset( $_GET['errMsg'] ) ){
-		echo $_GET['errMsg'];
-		unset($_GET['errMsg']);
-	}
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +12,7 @@
 	<!-- Bootstrap js -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="">
 	<div class="container">
 		<div class="row mb-5">
 			<h3 class="text-center">Gerenciador de tarefas pessoal</h3>
@@ -25,8 +20,8 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div>
-				<form class="form-control" method="POST" action="controller/ProcessarTarefa.php?action=adicionar">
+			<div class="col-6">
+				<form class="form-control" method="POST" action="controller/processarTarefa.php?action=adicionar">
 					<div class="mb-1">
 						<label class="form-label">Título da tarefa:</label>
 					</div>
@@ -44,18 +39,6 @@
 						<button class="btn btn-outline-primary">Adicionar</button>
 					</div>
 				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- Parte que exibe as tarefas -->
-	<div class="container">
-		<div class="row">
-			<div class="mt-3">
-				<h3 class="float-start">Tarefas adicionadas:</h3>
-			</div>
-			<div>
-				<table class="table"></table>
 			</div>
 		</div>
 	</div>
