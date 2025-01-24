@@ -8,9 +8,9 @@
 	$descricaoDaTarefa = $_POST['descricao-tarefa'];
 	$action = $_GET['action'];
 
-	if( empty( $tituloDaTarefa ) ){
-		header('Location: ../index.php?errMsg=tituloVazio');
-	}
+	// if( empty( $tituloDaTarefa ) ){
+	// 	header('Location: ../index.php?errMsg=tituloVazio');
+	// }
 
 	// var_dump($tituloDaTarefa, $action);
 	// die();

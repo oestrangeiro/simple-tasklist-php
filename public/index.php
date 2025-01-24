@@ -18,8 +18,18 @@
 			<h3 class="text-center">Gerenciador de tarefas pessoal</h3>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
+			<!-- Dash board -->
+			<div class="col-2 bg-secondary">
+				<div class="vstack gap-3 text-center">
+
+					<div class="">
+						<a href="../controller/processarTarefa.php?action=listar">Listar Tarefas</a>
+					</div>
+				</div>
+			</div>
+			<!-- Fim do dashboard -->
 			<div class="col-6">
 				<form class="form-control" method="POST" action="controller/processarTarefa.php?action=adicionar">
 					<div class="mb-1">
