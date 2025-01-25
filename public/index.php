@@ -25,13 +25,13 @@
 				<div class="vstack gap-3 text-center">
 
 					<div class="">
-						<a href="../controller/processarTarefa.php?action=listar">Listar Tarefas</a>
+						<a href="../routes/router.php?action=listar">Listar Tarefas</a>
 					</div>
 				</div>
 			</div>
 			<!-- Fim do dashboard -->
 			<div class="col-6">
-				<form class="form-control" method="POST" action="controller/processarTarefa.php?action=adicionar">
+				<form class="form-control" method="POST" action="/routes/router.php?action=adicionar">
 					<div class="mb-1">
 						<label class="form-label">Título da tarefa:</label>
 					</div>

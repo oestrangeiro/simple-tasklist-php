@@ -89,16 +89,16 @@
 				<div class="modal-body modal-dialog-scrollable">
 
 					<!-- Sim, um formulário dentro de um fuckin' modal kkkkk -->
-					<form class="form-control" method="POST" action="../view/a.php">
+					<form class="form-control" method="POST" action="/controller/editar.php">
 
 						<div class="mb-2">
-							<input  hidden="" class="form-control" id="task-id-input" type="text"name="id">
+							<input  hidden="" class="form-control" id="task-id-input" type="text"name="id-tarefa">
 
 							<label class="label mb-2">Editar título:</label>
-							<input class="form-control" type="text" name="titulo" placeholder="Insira um título para a tarefa">
+							<input class="form-control" type="text" name="titulo-tarefa" placeholder="Insira um título para a tarefa">
 
 							<label class="form-label mb-2">Editar descrição:</label>
-							<textarea class="form-control" type="text" name="descricao" placeholder="Insira uma descrição para a tarefa"></textarea>
+							<textarea class="form-control" type="text" name="descricao-tarefa" placeholder="Insira uma descrição para a tarefa"></textarea>
 						</div>
 
 						<div class="modal-footer">
