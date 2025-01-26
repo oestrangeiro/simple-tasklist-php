@@ -1,14 +1,5 @@
 <?php
-	// FUNCAO TEMP MODAL PARA EDITAR TAREFA
-
-	function showButtonTriggerToModal(){
-		echo <<< BLOCK
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEdit">
-				Editar
-			</button>
-		BLOCK;
-	}
-
+	require '../inc/functions.php';	
 ?>
 
 <!DOCTYPE html>
@@ -35,102 +26,143 @@
 		<tbody>
 		<?php
 			foreach ($tasks as $fields) {
-					echo "<tr>";
+			    echo "<tr>";
 
-					echo "<td hidden id=\"idTask\" value=\"{$fields['id']}\">";
-					echo "</td>";
+			    // ID da tarefa (oculto)
+			    echo "<td hidden data-task-id=\"{$fields['id']}\"></td>";
 
-					echo "<td>";
-					echo $fields['title'];
-					echo "</td>";
+			    
+			    echo "<td class=\"task-title\">";
+			    echo $fields['title'];
+			    echo "</td>";
 
-					
-					if( $fields['description'] == 'NULL'){
-						echo "<td>";
-						echo "";
-						echo "</td>";
-					}else{
-						echo "<td>";
-						echo $fields['description'];
-						echo "</td>";
-					}
+			    
+			    echo "<td>";
+			    echo $fields['description'] !== 'NULL' ? $fields['description'] : '';
+			    echo "</td>";
 
-					if( $fields['is_finished'] == 0){
-						echo "<td>";
-						echo "Não";
-						echo "</td>";
-					}else{
-						echo "<td>";
-						echo "Sim";
-						echo "</td>";
-					}
-					// Botão para abrir modal e editar tarefa
-					echo "<td>";
-					showButtonTriggerToModal();
-					echo "</td>";
+			    
+			    echo "<td>";
+			    echo $fields['is_finished'] == 0 ? 'Não' : 'Sim';
+			    echo "</td>";
 
-					echo "</tr>";
-				}	
+			    // Botões de ação
+			    echo "<td>";
+			    echo "<button class=\"btn btn-primary edit-button\" data-bs-toggle=\"modal\" data-bs-target=\"#modalEdit\">Editar</button>";
+			    echo "<button class=\"btn btn-danger delete-button\" data-bs-toggle=\"modal\" data-bs-target=\"#modalDelete\">Excluir</button>";
+			    echo "</td>";
+
+			    echo "</tr>";
+			}
+
 		?>
-		
-
-		</tbody>
+	</tbody>
 	</table>
 	<!-- Fim da tabela -->
 
-	<!-- Código do modal -->
-	<div class="modal fade" id="modalEdit">
+	<!-- Código do modal de edição -->
+	
+	<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
+  		<div class="modal-dialog">
+    	<div class="modal-content">
+     	<div class="modal-header">
+        	<h1 class="modal-title fs-5" id="modalEditLabel">Editar Tarefa</h1>
+        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+      	<div class="modal-body">
+
+        <!-- Formulário de Edição -->
+        <form method="POST" action="/controller/editar.php">
+        	<input type="hidden" id="task-id-input" name="id-tarefa">
+        	<div class="mb-3">
+            	<label for="titulo-tarefa" class="form-label">Título da Tarefa</label>
+            	<input type="text" class="form-control" name="titulo-tarefa" placeholder="Insira o título">
+          	</div>
+      		<div class="mb-3">
+            	<label for="descricao-tarefa" class="form-label">Descrição da Tarefa</label>
+            	<textarea class="form-control" name="descricao-tarefa" placeholder="Insira a descrição"></textarea>
+          	</div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </div>
+        	</form>
+    	</div>
+    </div>
+  	</div>
+</div>
+
+	<!-- Fim do código do modal de edição -->
+
+	<!-- Código do modal de remoção -->
+	<!-- Modal de Remoção -->
+	<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h3 class="text">Editar Tarefa</h3>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body modal-dialog-scrollable">
-
-					<!-- Sim, um formulário dentro de um fuckin' modal kkkkk -->
-					<form class="form-control" method="POST" action="/controller/editar.php">
-
-						<div class="mb-2">
-							<input  hidden="" class="form-control" id="task-id-input" type="text"name="id-tarefa">
-
-							<label class="label mb-2">Editar título:</label>
-							<input class="form-control" type="text" name="titulo-tarefa" placeholder="Insira um título para a tarefa">
-
-							<label class="form-label mb-2">Editar descrição:</label>
-							<textarea class="form-control" type="text" name="descricao-tarefa" placeholder="Insira uma descrição para a tarefa"></textarea>
-						</div>
-
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-warning">Editar</button>
-						</div>
-					</form>
-
-				</div>
-				
-			</div>
-		</div>
+	    	<div class="modal-content">
+	      	<div class="modal-header">
+	        	<h1 class="modal-title fs-5" id="modalDeleteLabel">Deletar Tarefa</h1>
+	        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	    	</div>
+      		<div class="modal-body">
+      			<form class="form-control" method="POST" action="/controller/deletar.php">
+      				<div class="mb-2">
+      					<p><strong>Título:</strong> <span id="delete-task-title"></span></p>
+        				<input type="hidden" id="delete-task-id" name="task-id">		
+      				</div>
+      				
+        			<div class="modal-footer">
+	        			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+	        			<button type="submit" class="btn btn-danger">Deletar</button>
+	      			</div>
+      			</form>
+	        		
+	    	</div>
+	    	</div>
+  		</div>
 	</div>
-	<!-- Fim do código do modal -->
 
 	<!--
 		Código para passar o ID da tarefa ao clicar no botão para o modal.
 		Javascript é uma bosta mesmo puta que pariu
 	 -->
 	<script type="text/javascript">
-		const editButons = document.querySelectorAll(".btn");
+		// Seleciona todos os botões de exclusão
+		document.querySelectorAll(".delete-button").forEach((button) => {
+		  button.addEventListener("click", (event) => {
+		    // Localiza a linha correspondente ao botão clicado
+		    const row = event.target.closest("tr");
 
-		editButons.forEach((button) => {
-			button.addEventListener("click", (event) => {
-				const row = event.target.closest("tr");
+		    // Captura o ID e o título da tarefa
+		    const taskId = row.querySelector("[data-task-id]").getAttribute("data-task-id");
+		    const taskTitle = row.querySelector(".task-title").textContent;
 
-				const taskId = row.querySelector("#idTask").getAttribute("value");
-
-				// Essa linha coloca o valor da variável taskId no modal correspondente
-				document.getElementById("task-id-input").value = taskId;
-			});
+		    // Preenche os campos do modal
+		    document.getElementById("delete-task-id").value = taskId;
+		    document.getElementById("delete-task-title").textContent = taskTitle;
+		  });
 		});
+	</script>
+
+	<!-- Script para o modal de edição -->
+	<script type="text/javascript">
+		// Seleciona todos os botões de edição
+		document.querySelectorAll(".edit-button").forEach((button) => {
+		  button.addEventListener("click", (event) => {
+		    // Localiza a linha correspondente ao botão clicado
+		    const row = event.target.closest("tr");
+
+		    // Captura o ID, título e descrição da tarefa
+		    const taskId = row.querySelector("[data-task-id]").getAttribute("data-task-id");
+		    const taskTitle = row.querySelector(".task-title").textContent;
+		    const taskDescription = row.querySelector("td:nth-child(3)").textContent.trim(); // Assume a descrição como a terceira célula (ajuste se necessário)
+
+		    // Preenche os campos do modal de edição
+		    document.getElementById("task-id-input").value = taskId;
+		    document.querySelector("input[name='titulo-tarefa']").value = taskTitle;
+		    document.querySelector("textarea[name='descricao-tarefa']").value = taskDescription || ""; // Evita `undefined` se descrição for vazia
+		  });
+		});
+
 	</script>
 </body>
 </html>
